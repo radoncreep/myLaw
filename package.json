@@ -1,0 +1,20 @@
+{
+  "name": "mylaw-assessment",
+  "version": "1.0.0",
+  "description": "assessment",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
+  },
+  "author": "Victor Onofiok",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
