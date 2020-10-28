@@ -1,8 +1,6 @@
 const express = require('express');
-const { findById, findByIdAndRemove } = require('../models/product');
 
 const Products = require('../models/product');
-const { post } = require('../routes/productRoute');
 
 exports.getViewProduct = async (req, res, next) => {
     let productId = req.params.prodId;
@@ -30,7 +28,7 @@ exports.getViewProduct = async (req, res, next) => {
     };
 };
 
-exports.getAddProduct = async (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
     let productName = req.body.productName;
     let description = req.body.description;
     let category = req.body.category;
@@ -102,7 +100,7 @@ exports.getEditProduct = async(req, res, next) => {
     };
 };
 
-exports.deleteProduct = async (req, res, next) => {
+exports.postDeleteProduct = async (req, res, next) => {
     const productId = req.params.prodId;
 
     try {
@@ -123,5 +121,5 @@ exports.deleteProduct = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-    }
-}
+    };
+};
