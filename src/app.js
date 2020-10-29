@@ -27,13 +27,13 @@ app.use(categoryRoutes);
 
 // error handling
 app.use((error, req, res, next) => {
-    console.log(error);
+    console.log(error, ' error');
     const status = error.statusCode;
     const message = error.message;
-    const data = error.data;
+    const data = error
 
     console.log(data, ' error data');
-    return res.json({ errorData: data });
+    return res.json({ msg: message, code: status });
 });
 
 const PORT = process.env.PORT || 3000;

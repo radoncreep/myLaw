@@ -1,7 +1,16 @@
 const express = require('express');
 
 const Products = require('../models/product');
+const Category = require('../models/category');
 
+exports.getAllProducts = async (req, res, next) => {
+    
+    const products = await Products.find();
+
+    const response = res.status(200).json({ message: 'all products', data: products });
+
+    return response;
+}
 exports.getViewProduct = async (req, res, next) => {
     let productId = req.params.prodId;
 
@@ -29,17 +38,27 @@ exports.getViewProduct = async (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-    let productName = req.body.productName;
+    let productName = req.body.productname;
     let description = req.body.description;
-    let category = req.body.category;
+    let categoryName = req.body.category;
 
     const productItem = new Products({
         productName,
         description,
-        category
+        category: categoryName
     });
 
     try {
+        const category = await Category.findOne({ categoryName });
+
+        if (!category) {
+            let error = new Error();
+            error.statusCode = 422;
+            error.message = 'category doesnt exist';
+            throw error;
+        }
+        console.log(category, ' CATEGORY ---------------')
+
         const newProduct = await productItem.save();
 
         res.status(201).json({
@@ -48,10 +67,10 @@ exports.postAddProduct = async (req, res, next) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(400).json({
-            message: error.message,
-            code: error.statusCode
-        })
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        };
+        next(error);
     };
 };
 

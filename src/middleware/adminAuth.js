@@ -3,12 +3,15 @@ require('dotenv').config();
 
 module.exports = (req, res, next) => {
     const authHeader = req.get('Authorization');
+    console.log(authHeader, ' AUTH HEADER ---------------------------------------')
     if (!authHeader) {
         const error = new Error('Not authenticated');
         error.statusCode = 401;
+        error.message = 'Unauthorized action'
         throw error;
     };
-    const token = authHeader.split('')[1];
+    const token = authHeader.split(" ")[1]
+    console.log(token, 'TOEKN');
     let decryptToken;
 
     try {
@@ -19,6 +22,7 @@ module.exports = (req, res, next) => {
     };
 
     if (!decryptToken) {
+        console.log('NO DECODE TOKEN')
         const error = new Error('Not authorized');
         error.statusCode = 401;
         throw err;

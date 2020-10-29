@@ -3,10 +3,13 @@
 const express = require('express');
 
 const Product = require('../models/product.js');
-const { getViewProduct, postAddProduct, getEditProduct, postDeleteProduct } = require('../controllers/productCtrl');
+const { getAllProducts, getViewProduct, postAddProduct, getEditProduct, postDeleteProduct } = require('../controllers/productCtrl');
 const adminAuth = require('../middleware/adminAuth');
 
 const router = express.Router();
+
+// All Products 
+router.get('/api/products0', getAllProducts);
 
 // View product
 router.get('/api/product/:prodId', getViewProduct);
